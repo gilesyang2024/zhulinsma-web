@@ -1,0 +1,251 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 84% 7%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 84% 7%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+
+    --radius: 0.5rem;
+
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  /* 自定义滚动条 */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/30;
+  }
+}
+
+/* Ticker 滚动动画 */
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-ticker {
+  animation: ticker linear infinite;
+}
+
+/* ─── 涨跌脉冲动画 ─────────────────────────────────────────── */
+@keyframes pulse-rise {
+  0%   { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.45); }
+  70%  { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+@keyframes pulse-fall {
+  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.45); }
+  70%  { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+.card-pulse-rise {
+  animation: pulse-rise 0.6s ease-out forwards;
+}
+.card-pulse-fall {
+  animation: pulse-fall 0.6s ease-out forwards;
+}
+
+/* ─── 数字滚动动画 ────────────────────────────────────────── */
+@keyframes number-roll {
+  0%   { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-number-roll {
+  animation: number-roll 0.25s ease-out forwards;
+}
+
+/* ─── 快速闪烁（数据更新） ────────────────────────────────── */
+@keyframes flash-rise {
+  0%   { background-color: rgba(239, 68, 68, 0.18); }
+  100% { background-color: transparent; }
+}
+@keyframes flash-fall {
+  0%   { background-color: rgba(34, 197, 94, 0.18); }
+  100% { background-color: transparent; }
+}
+.flash-rise { animation: flash-rise 0.5s ease-out; }
+.flash-fall { animation: flash-fall 0.5s ease-out; }
+
+/* ─── 预警涟漪动画 ─────────────────────────────────────────── */
+@keyframes alert-ripple {
+  0%   { box-shadow: 0 0 0 0 currentColor; opacity: 0.7; }
+  100% { box-shadow: 0 0 0 8px currentColor; opacity: 0; }
+}
+.alert-ripple-rise {
+  animation: alert-ripple 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+  color: rgba(239, 68, 68, 0.4);
+}
+.alert-ripple-warning {
+  animation: alert-ripple 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+  color: rgba(234, 179, 8, 0.4);
+}
+
+/* ─── K线拖尾效果（最新价横向光标线）─────────────────────────── */
+@keyframes price-line-glow {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+/* ─── 指标卡数值脉冲 ───────────────────────────────────────── */
+@keyframes indicator-pulse {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+.indicator-value-update {
+  animation: indicator-pulse 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Tab 切换滑块 ─────────────────────────────────────────── */
+@keyframes tab-slide {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+.tab-indicator-animate {
+  animation: tab-slide 0.2s ease-out;
+}
+
+/* ─── 按钮涟漪扩散 ─────────────────────────────────────────── */
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+.animate-ripple {
+  animation: ripple 0.6s ease-out forwards;
+}
+
+/* ─── 氛围光晕（涨/跌边框光晕）────────────────────────────── */
+.glow-border-rise {
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.25),
+              0 0 16px -4px rgba(239, 68, 68, 0.3);
+}
+.glow-border-fall {
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.25),
+              0 0 16px -4px rgba(34, 197, 94, 0.3);
+}
+
+/* ─── 卡片hover氛围光晕 ───────────────────────────────────── */
+.card-ambient:hover {
+  box-shadow: 0 0 20px -6px rgba(59, 130, 246, 0.25);
+}
+
+/* ─── 扫描线动画（氛围科技感）─────────────────────────────── */
+@keyframes scan-line {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  10%  { opacity: 0.4; }
+  90%  { opacity: 0.4; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+.scan-line {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59,130,246,0.5), transparent);
+  animation: scan-line 8s linear infinite;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.3;
+}
+
+/* ─── 渐入动画 ────────────────────────────────────────────── */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* rise/fall 颜色类 — 直接使用主题色避免循环依赖 */
+.text-rise { color: #ef4444; }
+.text-fall { color: #22c55e; }
+
+/* ─── Toast 入场动画 ─────────────────────────────────────────── */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+.animate-toast-in {
+  animation: toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@layer utilities {
+  
+  /* 玻璃拟态效果 */
+  .glass {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  
+  /* 数字滚动动画 */
+  .num-animate {
+    @apply animate-number-roll;
+  }
+  
+  /* 发光边框 */
+  .glow-border-rise {
+    box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.3), 0 0 12px rgba(239, 68, 68, 0.15);
+  }
+  .glow-border-fall {
+    box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.3), 0 0 12px rgba(34, 197, 94, 0.15);
+  }
+}
