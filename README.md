@@ -1,50 +1,73 @@
-# 🎋 竹林司马 Web (Zhulinsma Web)
+# React + TypeScript + Vite
 
-> 竹林司马·前端可视化平台 | React + TypeScript + Vite + TailwindCSS + Lightweight Charts
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 技术栈
+Currently, two official plugins are available:
 
-- **框架**: React 18 + TypeScript + Vite
-- **样式**: TailwindCSS + Radix UI
-- **图表**: Lightweight Charts (专业K线) + Recharts
-- **状态**: Zustand
-- **路由**: React Router v7
-- **动画**: Framer Motion
-- **实时**: WebSocket
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## 快速启动
+## React Compiler
 
-```bash
-npm install
-npm run dev
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-后端服务：确保 `backend_server.py` 已运行（Python Flask）
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-## 功能特性
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-- 📊 专业K线图（Lightweight Charts）
-- 🔴🟢 红涨绿跌（广州模式）
-- ⚡ 实时数据推送（WebSocket）
-- 🔔 技术指标预警系统（RSI/MA金叉）
-- 🌓 深色/浅色主题切换
-- 📱 响应式布局
-
-## 项目结构
-
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-src/
-├── components/
-│   ├── charts/     # K线图、迷你图
-│   ├── stock/      # 股票卡片、详情、预警
-│   └── ui/         # 通用UI组件
-├── hooks/          # useRealtime, useTheme
-├── pages/          # Dashboard, AnalysisReport
-├── store/          # Zustand状态管理
-├── lib/            # API客户端
-└── types/          # TypeScript类型定义
-```
-
-## 后端仓库
-
-👉 [竹林司马主工程](https://github.com/gilesyang2024/zhulinsma) - Python后端 + 技术分析引擎
